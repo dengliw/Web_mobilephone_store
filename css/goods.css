@@ -1,0 +1,24 @@
+/*左右布局*/
+/*浮动：float，左浮动：left*/
+/*边框：border*/
+/* 编码习惯：一定不要出现冗余的代码 */
+/*宽屏时代，大头的台式机，宽屏，而且ie6 1200*/
+
+
+.first_box{height: auto;overflow: hidden;}
+.left_box,.right_box{float:left;height: auto;}
+	.left_box{width: 300px;margin-right: 10px}
+	.left_box  img{width: 100%}
+	.right_box{width: 700px;}
+	/*间距10像素，内边距padding、外边距：margin*/
+
+/*清除浮动*/
+.second_box{clear:both;margin-top: 20px;height: 330px}
+.second_box div{border: 1px solid #ccc;float: left; width: 220px;height: 220px;margin-right: 20px;}
+
+.attr_box li{float: left; width: 40%; height: 30px; border: 1px solid #ccc; list-style: none; margin-right: 15px; text-align: center; line-height: 30px;color:#333 }
+
+.attr_box .active{border: 1px solid #f58384;color:#f58384}
+.clear{clear: both;}
+
+.mt20{margin-top: 20px;}

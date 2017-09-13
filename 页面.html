@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>路由</title>
+	<style type="text/css">
+	.cartBox{position: fixed;
+bottom: 11px;
+background-color: #ccc;
+width: 100%;
+padding: 10px;
+}
+.clear{clear: both;}
+.attrs_box li{height: 58px;line-height: 58px;overflow: hidden;list-style: none;}
+.navbar-nav .router-link-exact-active { background-color: #ccc}
+
+/*CSS3的transition定义一个动画
+	第一个参数：定义哪一个样式变化了，all代表全部
+	第二个参数：动画的速度，时间越小就越快
+*/
+/*规律
+	fade 是transition标签的name属性
+	enter 进入的动画
+	leave 离开的动画
+
+*/
+.fade-enter-active{transition:all 2s;}
+/*opacity:透明度*/
+.fade-enter{opacity: 0}
+
+/*详情界面*/
+/*第一个内容盒子*/
+.firstContent{ background:url("images/design_intro2_small.jpg") 0 0 no-repeat transparent; width: 100%; height: 740px; text-align: center; color: #fff; padding-top: 80px; }
+.borderRed{border: 1px solid red !important}
+#vue_box{height: auto;overflow: hidden;margin-bottom: 80px;}
+	</style>
+	<link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<!-- 动画第一步：引入源文件 -->
+	<link rel="stylesheet" type="text/css" href="css/animate.css">
+	<link rel="stylesheet" type="text/css" href="css/goods.css">
+	<link rel="stylesheet" type="text/css" href="css/mint-ui.css">
+
+	<script type="text/javascript" src="js/vue.min.js"></script>
+	<script type="text/javascript" src="js/vue-router.min.js"></script>
+	<script type="text/javascript" src="js/vue-resource.js"></script>
+	<script type="text/javascript" src="js/vuex.min.js"></script>
+	<script type="text/javascript" src="js/wow.min.js"></script>
+	<script type="text/javascript" src="js/mint-ui.js"></script>
+	 
+</head>
+<body>
+
+	<div id="vue_box">
+		<bottomcart></bottomcart>
+		<div class="pull-left">
+			<!-- 跳转 -->
+			<ul class="nav navbar-nav">
+				<li>
+					<router-link to="/" >购买页面</router-link>
+				</li>
+				<li>
+					<router-link to="/desc" >描页面</router-link>
+				</li>
+				<li>
+					<router-link to="/detailes" >详情</router-link>
+				</li>
+			</ul>
+		</div>
+		<div class="pull-right">
+			<router-link to="/login" >登录</router-link>
+			<router-link to="/register" >注册</router-link>
+		</div>
+		<div class="clear"></div>
+		<!-- 放路由的视图界面 -->
+		<!-- 试图切换也加上动画 -->
+		<!-- 路由切换加上动画第一步：给router-view加一个transition ，然后取一个动画名称 -->
+		<transition name="fade">
+			<router-view></router-view>
+			<transition>
+				<!-- 购物车的组件 -->
+ 
+	 
+	</div>
+			<!-- 视图view节点的外面 -->
+			<!-- 描述的视图 
+	特点：内容值能够放在一个div容器
+	 -->
+
+			<template id="desc">
+				<div>
+					<!-- Bootstrap栅格系统 -->
+					<!-- 图片加参数的盒子 -->
+					<div class="row">
+						<div class="col-md-6">
+							<img src="images/max2-specs-01.jpg" alt="" style="width:100%"></div>
+						<div class="col-md-6">
+							<ul class="row attrs_box">
+								<li class="col-lg-6 col-xs-6">6.44" 大屏 看什么都震撼</li>
+								<li class="col-lg-6 col-xs-6">5300mAh 充电宝级的大电量</li>
+								<li class="col-lg-6 col-xs-6">全金属 轻薄好手感</li>
+								<li class="col-lg-6 col-xs-6">大像素相机 索尼 IMX386 感光元件</li>
+								<li class="col-lg-6 col-xs-6">4GB + 128GB 另有 4GB + 64GB 可选</li>
+								<li class="col-lg-6 col-xs-6">立体声 双功放扬声器</li>
+							</ul>
+						</div>
+					</div>
+					<!-- 第二行：具体的版本信息 -->
+					<div class="row">
+						<div class="col-lg-2">
+							<h2>版本</h2>
+						</div>
+						<div class="col-lg-10">
+							<p>4GB + 64GB / 4GB + 128GB</p>
+							<p >骁龙 625 八核处理器，最高主频 2.0GHz</p>
+						</div>
+					</div>
+				</div>
+
+			</template>
+			<template id="detailes">
+
+				<div>
+					<div class="firstContent">
+						<h1 class="wow fadeInUp">小米电视4 49英寸</h1>
+						<h3  class="wow fadeInUp">4.9mm 极超薄高端旗舰电视</h3>
+						<p  class="wow fadeInUp">3499元</p>
+					</div>
+					<!-- 第二个内容盒子 -->
+					<div class="secondContent">
+						<div>
+							<img :src="curShowImg" class="img-responsive"></div>
+						<div>
+							<div class="col-lg-6">
+								<!-- 监听鼠标滑过事件 -->
+								<a href="" @mouseover="showImg(0)">4K</a>
+							</div>
+							<div class="col-lg-6">
+								<a href=""  @mouseover="showImg(1)">HDR</a>
+							</div>
+						</div>
+					</div>
+					<!-- 第三个内容盒子 -->
+					<div class="thirdContent">
+						<h1 class="wow fadeInUp">做高性能的好电视</h1>
+						<p class="wow fadeInUp">
+							四核 64 位旗舰处理器，2GB+8GB大存储，反应更快， 运行更快，看大片、玩游戏更流畅
+						</p>
+						<div class="row">
+							<div class="col-lg-4 wow fadeInLeft">4核 CPU</div>
+							<div class="col-lg-4 wow fadeInLeft">2核 CPU</div>
+							<div class="col-lg-4 wow fadeInLeft">8核 CPU</div>
+						</div>
+					</div>
+				</div>
+
+			</template>
+			<template id="login"> 
+				<div>
+					<form action="#" class="form" style="width:580px;margin:0 auto">
+						<!-- bootstrap表单样式 -->
+						<!-- html5表单新增加属性 -->
+						<div class="form-group">
+							<label for="">用户名</label>
+							<input  @keyup="checkName()"  type="text" @blur="checkName()" placeholder="只允许手机号码" required  v-model="userName" class="form-control" :class="{borderRed:userErrStatus}">
+						</div>
+						<div class="form-group">
+							<label for="">密码：</label>
+							<input v-model="userPwd" type="password" placeholder="请输入6到18位密码" required class="form-control">
+						</div> 
+						<!-- bootstrap 的按钮样式 -->
+						 <div class="form-group">
+						 <!-- button -->
+						 	<input type="button" @click="doReg()" class="btn btn-info" value="我要登录">
+						 </div>
+					</form>
+				</div>
+			</template>
+			<!-- 注册页面 -->
+			<template id="register">
+				<div>
+					<form action="#" class="form" style="width:580px;margin:0 auto">
+						<!-- bootstrap表单样式 -->
+						<!-- html5表单新增加属性 -->
+						<div class="form-group">
+							<label for="">用户名</label>
+							<input  @keyup="checkName()"  type="text" @blur="checkName()" placeholder="只允许手机号码" required  v-model="userName" class="form-control" :class="{borderRed:userErrStatus}">
+						</div>
+						<div class="form-group">
+							<label for="">密码：</label>
+							<input v-model="userPwd" type="password" placeholder="请输入6到18位密码" required class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="">确认密码：</label>
+							<input type="password" placeholder="请再一次输入密码" required class="form-control">
+						</div>
+						<!-- bootstrap 的按钮样式 -->
+						 <div class="form-group">
+						 <!-- button -->
+						 	<input type="button" @click="doReg()" class="btn btn-info" value="开始注册">
+						 </div>
+					</form>
+				</div>
+			</template>
+			<!-- 购买页面 -->
+			<template id="buyPage">
+				
+				<div>
+					<!-- 左边的容器 -->
+				<div class="left_box">
+					<img src="images/img-3.jpg" alt="图片">
+
+				</div>
+				<!-- 右边的容器 -->
+				<div class="right_box">
+
+					<img src="images/yyymix.gif">
+
+					<!-- 主标题 -->
+					<h1>小米明星单品</h1>
+
+					<!-- 副标题 -->
+					<h2>小米Note2</h2>
+
+					<!-- 段落标签 -->
+					<p >
+						<!-- b:bold单词，加粗 --> <b style="color:red">【白菜价】</b>
+						这一台手机很便宜，价格是多少
+					</p>
+					<!-- 红色的字体 -->
+					<p style="color:red">{{ goods_price }}</p>
+					<div>
+						<p>选择版本</p>
+						<!-- 无序列表 -->
+						<!-- 视图变量数组的方法：
+							for、foreach
+							v-for指令：遍历一个数组
+							语法：视图变量的名称（item）  in 模型层的数组（version_data）
+						 -->
+						 <ul class="attr_box">
+								
+								<!-- 点击这指定版本li就显示对应的版本价格 -->
+								<!-- v-on:监听事件指令  -->
+
+								<!-- :class 里面的值是什么意思呢？
+									推荐使用对象，属性是代表类的名字，值：true/false
+
+								 -->
+							<li v-for="item in version_data" v-on:click="choise_version(item)"  :class="{active:item.active}">
+								{{ item.name }}
+							</li>
+
+						 <!-- 	<li class="active">全网通 16G</li>
+						 	<li>联通 32G</li> -->
+						 </ul>
+					</div>
+
+					<div class="clear"></div>
+					<div  class="mt20">
+						<p>选择颜色</p>
+						<!-- 无序列表 -->
+						 <ul class="attr_box">
+						 	<li  v-for="item in color_data" :class="{active:item.active}" @click="choise_color(item)">{{ item.name}}</li>
+						  
+						 </ul>
+					</div>
+					<div class="clear"></div>
+					<div class="mt20 pull-right">
+						<a @click="addCart()" class="btn btn-success">加入购物车</a>
+					</div>
+				</div>
+				</div>
+
+			</template>
+		    <template id="cartpage">
+					<div>
+						购物车
+						<label > <input v-model="checkAllModel"  type="checkbox" @click="checkAll()">全选 </label>
+							<ul>
+								<li v-for="(item,index)  in $store.state.cartList">
+									<input :value="item" type="checkbox" v-model="checkGoods">
+										<!-- 缩写： -->
+										版本： {{item.cur_version.name}}
+										<br>
+										颜色： {{item.cur_color.name}}
+										<br>
+										价格：  {{item.goods_price}}  
+										<br>
+										<button @click="jNum(item)">-</button>  	<input type="text" :value="item.number"> <button @click="addNum(item)">+</button>	
+										<button class="btn btn-danger" @click="delItem(index,item)">删除</button>
+								</li>
+							</ul>
+
+						 总计：总价格是： {{ totalPrice }} 总数量： {{ totalNum }}
+						 <!-- 结算按钮在用户选择了商品才取消禁止 -->
+					<button class="btn btn-info" :disabled="checkGoods.length == 0"> 结算</button>
+					</div>
+		     </template>
+
+<script type="text/javascript" src="common/mi.js"> </script>
+
+			<!-- 解决动画在滚动到指定的视窗才显示 -->
+			<!-- 第一步：引入wow  -->
+</body>
+		</html>
